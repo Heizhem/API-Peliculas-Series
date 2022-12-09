@@ -5,9 +5,11 @@ import numpy as np
 
 app = FastAPI()
 #cargo el dataframe
-df = pd.read_csv('../Datasets\df_query.csv')
+df = pd.read_csv('df_procesado.csv')
 
-#modelos
+@app.get("/")
+def read_root():
+    return {"Hecho por": "Carlos Porcel"}
 
 
 #Cantidad de películas y series (separado) por plataforma
