@@ -15,16 +15,22 @@ def read_root():
 #Cantidad de películas y series (separado) por plataforma
 @app.get('/get_count_plataform/{plataforma}')
 async def get_count_plataform(plataforma):
+    #dataframe que cuanta las peliculas agrupado por plataforma y por tipo
     cant_videos = df.groupby(['platform','type']).count()['title'].loc[plataforma]
+    #diccionario con la cantidad de pelicula y series
     valores ={'peliculas': int(cant_videos[0]),'series' : int(cant_videos[1])}
     return valores
 
 #Cantidad de veces que se repite un género y plataforma con mayor frecuencia del mismo
 @app.get('/get_listedin/{genero}')
 async def get_listedin(genero:str):
-    
-    cants = df[df['listed_in'].str.contains(",\s*{0}\s*,|^{0}\s*,|,\s*{0}$|^{0}$".format(genero),regex=True)].groupby(['platform']).count()['title'].sort_values()
+    #mascara que verifica si la pelicula es de ese genero
+    mask=df['listed_in'].str.contains(",\s*{0}\s*,|^{0}\s*,|,\s*{0}$|^{0}$".format(genero),regex=True)# verifica genro esta en el comienza, termina o esta en medio de cada valor de listed_in 
+    #cuenta la cantidad de peliculas con ese genero agrupado por plataforma, luego lo ordena de forma ecendente
+    cants = df[mask].groupby(['platform']).count()['title'].sort_values()
+    #mayor numero de peliculas con ese genro
     cantidad = int(cants.max())
+    #plataforma con que con el mayor cantidad de ese genero
     plataforma = cants.loc[cants == cantidad].index[0]
 
     return {'plataforma':plataforma,'cantidad':cantidad}
