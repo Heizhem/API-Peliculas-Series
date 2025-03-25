@@ -1,34 +1,36 @@
-# API Series y Peliculas
-## **Propuesta de trabajo**
+# **Proyecto: Ingesta y Exposición de Datos mediante API REST**  
 
-El proyecto consiste en realizar una ingesta de datos desde diversas fuentes, posteriormente aplicar las transformaciones que consideren pertinentes, y luego disponibilizar los datos limpios para su consulta a través de una API. Esta API deberán construirla en un entorno virtual dockerizado.
+## **Descripción**  
+Este proyecto consiste en la ingesta, transformación y exposición de datos desde múltiples fuentes, permitiendo su consulta a través de una API desarrollada en un entorno virtualizado con Docker. Se procesan datos de distintos formatos (CSV, JSON), se aplican técnicas de limpieza y normalización, y se implementan endpoints para responder a consultas específicas sobre películas y series.  
 
-Los datos serán provistos en archivos de diferentes extensiones, como *csv* o *json*. Se espera que realicen un EDA para cada dataset y corrijan los tipos de datos, valores nulos y duplicados, entre otras tareas. Posteriormente, tendrán que relacionar los datasets así pueden acceder a su información por medio de consultas a la API.
+## **🛠 Tecnologías Utilizadas**  
+- **Lenguaje:** Python  
+- **Manejo de datos:** pandas, numpy  
+- **API:** FastAPI
+- **Virtualización:** Docker  
+- **Almacenamiento:** Archivos CSV y JSON
 
-Las consultas son:
+## **📁 Estructura del Proyecto**  
+```
+📂 API-Peliculas-Series
+ ├── 📁 app                    # Código fuente  
+ │   ├── 📁__pycache__            
+ │   ├── main.py               # Transformaciones y limpieza  
+ │   ├── df_procesado          # Implementación de la API 
+ ├── 📁 Datasets               # Archivos de datos en CSV/JSON     
+ ├── Dockerfile                # Configuración del contenedor   
+ ├── etl.ipynb                 # Análisis exploratorio de datos (EDA)
+ ├── README.md                 # Documentación del proyecto
+ ├── requirements.txt          # Dependencias del proyecto  
+   
+```
 
-+ Máxima duración según tipo de film (película/serie), por plataforma y por año:
-    El request debe ser: get_max_duration(año, plataforma, [min o season])
 
-+ Cantidad de películas y series (separado) por plataforma
-    El request debe ser: get_count_plataform(plataforma)  
-  
-+ Cantidad de veces que se repite un género y plataforma con mayor frecuencia del mismo.
-    El request debe ser: get_listedin('genero')  
-    Como ejemplo de género pueden usar 'comedy', el cuál deberia devolverles un cunt de 2099 para la plataforma de amazon.
+## **📌 Endpoints de la API**  
 
-+ Actor que más se repite según plataforma y año.
-  El request debe ser: get_actor(plataforma, año)
-
-## **Pasos del proyecto**
-
-1. Ingesta y normalización de datos
-
-2. Relacionar el conjunto de datos y crear la tabla necesaria para realizar consultas. Aquí se recomienda corroborar qué datos necesitarán en base a las consultas a realizar y concatenar las 4 tablas
-
-3. Leer documentación en links provistos e indagar sobre Uvicorn, FastAPI y Docker
-
-4. Crear la API en un entorno Docker → leer documentación en links provistos
-
-5. Realizar consultas solicitadas
-
+| Endpoint | Descripción | Ejemplo de Uso |
+|----------|------------|----------------|
+| `/get_max_duration?año=2020&plataforma=Netflix&tipo=min` | Devuelve la película/serie más larga por año y plataforma. | `get_max_duration(2020, "Netflix", "min")` |
+| `/get_count_platform?plataforma=Amazon` | Cantidad de películas y series en una plataforma. | `get_count_platform("Amazon")` |
+| `/get_listedin?genero=Comedy` | Plataforma con más títulos de un género específico. | `get_listedin("Comedy")` |
+| `/get_actor?plataforma=Hulu&año=2019` | Actor más frecuente en una plataforma y año. | `get_actor("Hulu", 2019)` |
