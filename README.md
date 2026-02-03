@@ -4,7 +4,7 @@
 Este proyecto consiste en la ingesta, transformación y exposición de datos desde múltiples fuentes, permitiendo su consulta a través de una API desarrollada en un entorno virtualizado con Docker. Se procesan datos de distintos formatos (CSV, JSON), se aplican técnicas de limpieza y normalización, y se implementan endpoints para responder a consultas específicas sobre películas y series.  
 
 ## **🛠 Tecnologías Utilizadas**  
-- **Lenguaje:** Python  
+- **Lenguaje:** Python 
 - **Manejo de datos:** pandas, numpy  
 - **API:** FastAPI
 - **Virtualización:** Docker  
