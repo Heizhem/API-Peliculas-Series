@@ -101,6 +101,8 @@ http://localhost:8000/docs
 | `/get_listedin`       | Plataforma con más títulos de un género                |
 | `/get_actor`          | Actor más frecuente por plataforma y año               |
 
+![Ejemplo API](img\ejemplo_documentacion.jpg)
+
 ---
 
 ## 🎯 Alcance y Decisiones de Diseño
