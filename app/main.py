@@ -96,27 +96,6 @@ async def get_max_duration(anio:int,plataforma:str,tipo:str):
     return {'titulo':pelicula,'duracion':max_duracion}
 
 #Actor que más se repite según plataforma y año
-# @app.get('/get_actor/{plataforma}&{anio}')
-# def get_actor(plataforma:str, anio:int):
-    
-#     actores=[]
-#     df_actores= df[(df['platform']== plataforma) & (df['release_year']== anio)&(df['cast']!= 'sin datos')]['cast']
-
-#     for elem in df_actores:
-#         valores=elem.split(',')
-#         valores = map(lambda x: x.lstrip().rstrip(),valores)
-#         actores+=valores
-    
-
-#     resultado= {'actor': actores[0],'cantidad':0}
-
-#     for actor in actores:
-#         if df_actores[df_actores.str.contains(',\s*{0}\s*,|^{0}$|,\s*{0}$'.format(actor))].count() > resultado['cantidad']:
-#             resultado['actor'] = actor
-#             resultado['cantidad'] = df_actores[df_actores.str.contains(actor)].count()
-    
-#     return {'actor' : str(resultado['actor']), 'aparicionse' : int(resultado['cantidad'])}
-
 @app.get('/get_actor/{plataforma}&{anio}')
 def get_actor(plataforma:str, anio:int):
     plataforma = plataforma.lower().strip()
