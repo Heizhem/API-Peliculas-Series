@@ -12,16 +12,19 @@ df = pd.read_csv('.\Datos\procesados\df_procesado.csv')
 def read_root():
     return {"Hecho por": "Carlos Pórcel"}
 
+# Devuelve las plataformas
 @app.get("/plataformas")
 def get_plataformas():
     return {"plataformas": df['platform'].unique().tolist()}
 
+# Devuelve las años
 @app.get("/años")
 def get_años():
     años = df['release_year'].unique().tolist()
     años.sort()
     return {"años": años}
 
+# Devuelve las generos y la cantidad total de génerosS
 @app.get("/generos")
 def get_generos():
     cant_por_genero = {}
