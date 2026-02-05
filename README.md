@@ -1,36 +1,117 @@
-# **Proyecto: Ingesta y Exposición de Datos mediante API REST**  
+# Proyecto: Pipeline de Datos y API REST para Películas y Series
 
-## **Descripción**  
-Este proyecto consiste en la ingesta, transformación y exposición de datos desde múltiples fuentes, permitiendo su consulta a través de una API desarrollada en un entorno virtualizado con Docker. Se procesan datos de distintos formatos (CSV, JSON), se aplican técnicas de limpieza y normalización, y se implementan endpoints para responder a consultas específicas sobre películas y series.  
+## 📌 Descripción
+Este proyecto implementa un **pipeline completo de datos**, desde el análisis exploratorio (EDA), pasando por un proceso de **ETL**, hasta la **exposición de los datos mediante una API REST** desarrollada con FastAPI.
 
-## **🛠 Tecnologías Utilizadas**  
-- **Lenguaje:** Python 
-- **Manejo de datos:** pandas, numpy  
-- **API:** FastAPI
-- **Virtualización:** Docker  
-- **Almacenamiento:** Archivos CSV y JSON
+Se procesan datasets de distintas plataformas de streaming (CSV y JSON), se aplican procesos de limpieza, normalización y consolidación, y el dataset resultante es expuesto mediante endpoints de solo lectura (GET).
 
-## **📁 Estructura del Proyecto**  
+---
+
+## 🔄 Flujo del Proyecto
+
+1. **EDA (Exploratory Data Analysis)**  
+   Análisis exploratorio de los datasets originales para detectar inconsistencias, valores faltantes y definir reglas de normalización.
+
+2. **ETL (Extract, Transform, Load)**  
+   - **Extract:** lectura de datos desde archivos CSV/JSON  
+   - **Transform:** limpieza, normalización de categorías y unificación de formatos  
+   - **Load:** generación de un dataset consolidado en CSV
+
+3. **API REST**  
+   La API carga el dataset procesado una única vez en memoria y expone endpoints para consultas analíticas.
+
+---
+
+## 🛠 Tecnologías Utilizadas
+- **Lenguaje:** Python  
+- **Procesamiento de datos:** pandas, numpy  
+- **API:** FastAPI  
+- **Contenerización:** Docker  
+- **Almacenamiento:** Archivos CSV y JSON  
+
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+app/
+├── main.py                # API FastAPI (endpoints GET)
+
+Datos/
+├── archivos/              # Datasets originales (raw)
+└── procesados/
+    └── df_procesado.csv   # Dataset final generado por el ETL
+
+ETL/
+├── extraer.py             # Extracción de datos
+├── transformar.py         # Transformaciones y normalización
+├── cargar.py              # Carga del dataset final
+├── etl.py                 # Orquestador del proceso ETL
+└── EDA.ipynb              # Análisis exploratorio de datos
+
+Dockerfile
+requirements.txt
+README.md
+````
+
+---
+
+## ⚙️ Ejecución del ETL
+
+Desde la raíz del proyecto:
+
+```bash
+python ETL/etl.py
 ```
-📂 API-Peliculas-Series
- ├── 📁 app                    # Código fuente  
- │   ├── 📁__pycache__            
- │   ├── main.py               # Transformaciones y limpieza  
- │   ├── df_procesado          # Implementación de la API 
- ├── 📁 Datasets               # Archivos de datos en CSV/JSON     
- ├── Dockerfile                # Configuración del contenedor   
- ├── etl.ipynb                 # Análisis exploratorio de datos (EDA)
- ├── README.md                 # Documentación del proyecto
- ├── requirements.txt          # Dependencias del proyecto  
-   
+
+Este proceso genera el archivo:
+
+```text
+Datos/procesados/df_procesado.csv
 ```
 
+---
 
-## **📌 Endpoints de la API**  
+## 🚀 Ejecución de la API
 
-| Endpoint | Descripción | Ejemplo de Uso |
-|----------|------------|----------------|
-| `/get_max_duration?año=2020&plataforma=Netflix&tipo=min` | Devuelve la película/serie más larga por año y plataforma. | `get_max_duration(2020, "Netflix", "min")` |
-| `/get_count_platform?plataforma=Amazon` | Cantidad de películas y series en una plataforma. | `get_count_platform("Amazon")` |
-| `/get_listedin?genero=Comedy` | Plataforma con más títulos de un género específico. | `get_listedin("Comedy")` |
-| `/get_actor?plataforma=Hulu&año=2019` | Actor más frecuente en una plataforma y año. | `get_actor("Hulu", 2019)` |
+```bash
+uvicorn app.main:app --reload
+```
+
+La API estará disponible en:
+
+```
+http://localhost:8000
+```
+
+Documentación interactiva:
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+## 📌 Endpoints Disponibles
+
+| Endpoint              | Descripción                                            |
+| --------------------- | ------------------------------------------------------ |
+| `/get_max_duration`   | Título con mayor duración según año, plataforma y tipo |
+| `/get_count_platform` | Cantidad de títulos por plataforma                     |
+| `/get_listedin`       | Plataforma con más títulos de un género                |
+| `/get_actor`          | Actor más frecuente por plataforma y año               |
+
+---
+
+## 🎯 Alcance y Decisiones de Diseño
+
+* API de solo lectura (GET)
+* Dataset cargado una sola vez en memoria
+* Separación clara entre EDA, ETL y API
+* Diseño simple y reproducible, preparado para escalar a base de datos si el volumen lo requiere
+
+---
+
+## 🧠 Comentario Final
+
+El proyecto prioriza **claridad, buenas prácticas y separación de responsabilidades**, evitando complejidad innecesaria dada la escala del dataset y el tipo de consultas.
