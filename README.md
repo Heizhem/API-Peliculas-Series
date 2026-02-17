@@ -72,24 +72,59 @@ Datos/procesados/df_procesado.csv
 
 ---
 
-## 🚀 Ejecución de la API
+## 🚀 Ejecución de la API por Consola
 
 ```bash
 uvicorn app.main:app --reload
 ```
+*Para detener el programa* `ctrl + C`.
 
-La API estará disponible en:
+## 🚀 Ejecución de la API con Docker
 
+### 📋 Requisitos
+
+- Tener Docker instalado
+- Estar ubicado en la raíz del proyecto (donde está el `Dockerfile`)
+
+---
+
+**Construir la imagen**
+
+```bash
+docker build -t fastapi-app .
 ```
+**Ejecutar el contenedor**
+```bash
+docker run -p 8000:80 --name api-peliculas fastapi-app
+```
+
+*Para detener el programa* `ctrl + C`.
+
+---
+### Ejecutar al terminar de usar la api
+**Detener el contenedor**
+
+```bash
+docker stop api-peliculas
+```
+**Eliminar el contenedor**
+
+```bash
+docker rm -f api-peliculas
+```
+---
+## 📋 Acceder a la API
+
+**Abrir en el navegador**
+
+```bash
 http://localhost:8000
 ```
+**Documentación interactiva**
 
-Documentación interactiva:
-
-```
+```bash
 http://localhost:8000/docs
 ```
-
 ---
 
 ## 📌 Endpoints Disponibles

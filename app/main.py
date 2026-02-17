@@ -6,7 +6,7 @@ import re
 
 app = FastAPI()
 #cargo el dataframe
-df = pd.read_csv('.\Datos\procesados\df_procesado.csv')
+df = pd.read_csv('Datos/procesados/df_procesado.csv')
 
 @app.get("/")
 def read_root():
