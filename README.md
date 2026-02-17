@@ -77,6 +77,7 @@ Datos/procesados/df_procesado.csv
 ```bash
 uvicorn app.main:app --reload
 ```
+*Para detener el programa* `ctrl + C`.
 
 ## 🚀 Ejecución de la API con Docker
 
